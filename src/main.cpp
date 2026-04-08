@@ -1,21 +1,27 @@
 #include <Arduino.h>
+#include <Servo.h>
 
-// put function declarations here:
+Servo servo270;
+
 int myFunction(int, int);
 
+int servo_270_angle(int angle)
+{
+  return (int) (angle * 180.0 / 270.0);
+}
 void setup() {
   // put your setup code here, to run once:
   int result = myFunction(2, 3);
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
+  servo270.attach(3);
 }
 
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(1000);
-  Serial.write("AAAAAAAAAAAAAAAAAAA \n");
+  servo270.write(servo_270_angle(180));
+  delay(5000);
+  servo270.write(0);
+  delay(5000);
 }
 
 // put function definitions here:
