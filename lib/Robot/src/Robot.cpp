@@ -17,13 +17,12 @@ void Robot::setClawServoAngle(int angle)
 
 void Robot::stepArmMotorUp()
 {
-    const int armMotorPins[] = {ARM_MOTOR_IN1_PIN,ARM_MOTOR_IN2_PIN,ARM_MOTOR_IN3_PIN,ARM_MOTOR_IN4_PIN};
+    const int armMotorPins[] = {ARM_MOTOR_IN4_PIN,ARM_MOTOR_IN3_PIN,ARM_MOTOR_IN2_PIN,ARM_MOTOR_IN1_PIN};
     const int numPins = 4;
     for(int i = 0;i < numPins;i++)
     {
+        if(i != 0)digitalWrite(armMotorPins[i-1], LOW);
         digitalWrite(armMotorPins[i],HIGH);
-        if(i == 0)continue;
-        digitalWrite(armMotorPins[i-1], LOW);
         delayMicroseconds(ARM_MOTOR_STEP_DELAY_US);
     }
     digitalWrite(armMotorPins[3],LOW);
@@ -31,13 +30,12 @@ void Robot::stepArmMotorUp()
 
 void Robot::stepArmMotorDown()
 {
-    const int armMotorPins[] = {ARM_MOTOR_IN4_PIN,ARM_MOTOR_IN3_PIN,ARM_MOTOR_IN2_PIN,ARM_MOTOR_IN1_PIN};
+    const int armMotorPins[] = {ARM_MOTOR_IN1_PIN,ARM_MOTOR_IN2_PIN,ARM_MOTOR_IN3_PIN,ARM_MOTOR_IN4_PIN};
     const int numPins = 4;
     for(int i = 0;i < numPins;i++)
     {
+        if(i != 0)digitalWrite(armMotorPins[i-1], LOW);
         digitalWrite(armMotorPins[i],HIGH);
-        if(i == 0)continue;
-        digitalWrite(armMotorPins[i-1], LOW);
         delayMicroseconds(ARM_MOTOR_STEP_DELAY_US);
     }
     digitalWrite(armMotorPins[3],LOW);
@@ -48,7 +46,7 @@ void Robot::resetArmMotorPosition()
     armMotorCurrentPosition = 0;
     armMotorTargetPosition = 0;
 
-    for(int i = 0;i <= ARM_MOTOR_POSITION_MAX;i++)
+    for(int i = 0;i < ARM_MOTOR_POSITION_MAX;i++)
     {
         stepArmMotorDown();
     }

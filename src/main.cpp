@@ -1,16 +1,11 @@
 #include <Arduino.h>
 #include <Robot.h>
 
-
+Robot robot;
 void setup() {
-  // put your setup code here, to run once:
-  
+  robot = Robot();
 }
 
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(1000);
-  Serial.write("AAAAAAAAAAAAAAAAAAA \n");
+  
 }
