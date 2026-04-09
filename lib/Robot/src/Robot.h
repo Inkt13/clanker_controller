@@ -44,3 +44,5 @@ class Robot {
 
     void updateArmMotor();
 };
+
+Robot robot;
