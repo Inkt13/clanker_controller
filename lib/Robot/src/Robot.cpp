@@ -19,6 +19,10 @@ void Robot::setClawServoAngle(int angle)
 
 void Robot::stepArmMotorUp()
 {
+    armMotorCurrentPosition++;
+    if (armMotorCurrentPosition > ARM_MOTOR_POSITION_MAX)
+        armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
+
     const int armMotorPins[] = {ARM_MOTOR_IN4_PIN,ARM_MOTOR_IN3_PIN,ARM_MOTOR_IN2_PIN,ARM_MOTOR_IN1_PIN};
     const int numPins = 4;
     for(int i = 0;i < numPins;i++)
@@ -32,6 +36,9 @@ void Robot::stepArmMotorUp()
 
 void Robot::stepArmMotorDown()
 {
+    armMotorCurrentPosition--;
+    if (armMotorCurrentPosition < ARM_MOTOR_POSITION_MIN)
+        armMotorCurrentPosition = ARM_MOTOR_POSITION_MIN;
     const int armMotorPins[] = {ARM_MOTOR_IN1_PIN,ARM_MOTOR_IN2_PIN,ARM_MOTOR_IN3_PIN,ARM_MOTOR_IN4_PIN};
     const int numPins = 4;
     for(int i = 0;i < numPins;i++)
