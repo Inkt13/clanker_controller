@@ -16,7 +16,7 @@ namespace SerialDecoder {
                 robot.closeClaw();
                 break;
             default:
-                Serial.write("Unknown data detected\n");
+                break;
         }
     }
 }
