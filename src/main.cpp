@@ -1,24 +1,18 @@
 #include <Arduino.h>
-
-// put function declarations here:
-int myFunction(int, int);
+#include <Robot.h>
+#include <SerialDecoder.h>
 
 void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
-  pinMode(LED_BUILTIN, OUTPUT);
+  // Not sure if i have to do this but im not taking any chances lol
+  robot = Robot();
   Serial.begin(9600);
 }
 
-void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);
-  delay(1000);
-  digitalWrite(LED_BUILTIN, LOW);
-  delay(1000);
-  Serial.write("AAAAAAAAAAAAAAAAAAA \n");
-}
+// byte data sent from the Raspberry PI 5
+byte serialData = 0;
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+void loop() {
+  serialData = Serial.read();
+  SerialDecoder::handleSerialData(serialData);
+  robot.updateArmMotor();
 }
