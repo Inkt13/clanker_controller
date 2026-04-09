@@ -1,3 +1,4 @@
+#pragma once
 #include <Servo.h>
 #include <Arduino.h>
 
@@ -31,12 +32,12 @@ class Robot {
     int armMotorTargetPosition;
 
     void setClawServoAngle(int angle);
-    void setArmMotorPosition(int position);
     void stepArmMotorUp();
     void stepArmMotorDown();
     
     public:
     void resetArmMotorPosition();
+    void setArmMotorPosition(int position);
     void moveArmMotorUp();
     void moveArmMotorDown();
     void openClaw();
@@ -45,4 +46,4 @@ class Robot {
     void updateArmMotor();
 };
 
-Robot robot;
+extern Robot robot;
