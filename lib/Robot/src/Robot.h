@@ -31,14 +31,13 @@ class Robot {
     int armMotorTargetPosition;
 
     void setClawServoAngle(int angle);
-    void setArmMotorPosition(int position);
     void stepArmMotorUp();
     void stepArmMotorDown();
     
     public:
+    Robot();
     void resetArmMotorPosition();
-    void moveArmMotorUp();
-    void moveArmMotorDown();
+    void setArmMotorPosition(int position);
     void openClaw();
     void closeClaw();
 
