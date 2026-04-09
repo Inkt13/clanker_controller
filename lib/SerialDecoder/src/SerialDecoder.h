@@ -4,6 +4,7 @@
 
 namespace SerialDecoder {
     enum class Command {
+        ResetArmMotorPosition   = 0x10,
         SetArmMotorPositionUp   = 0x11,
         SetArmMotorPositionDown = 0x12,
         OpenClaw                = 0x21,       

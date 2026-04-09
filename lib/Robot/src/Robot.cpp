@@ -7,8 +7,6 @@ Robot::Robot()
 {
     clawServo.attach(CLAW_SERVO_PIN);
     setClawServoAngle(0);
-
-    resetArmMotorPosition();
 }
 
 void Robot::setClawServoAngle(int angle)
