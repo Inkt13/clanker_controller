@@ -1,3 +1,4 @@
+#pragma once
 #include <Robot.h>
 // This file contains helpers that handle byte level serial data from the Raspberry Pi 5
 

@@ -1,14 +1,22 @@
 #include <SerialDecoder.h>
 
-SerialDecoder::handleSerialData(byte b) {
-    switch (b) {
-        case Command::SetArmMotorPositionDown:
-            robot.setArmMotorPosition(ARM_MOTOR_POSITION_DOWN);
-        case Command::SetArmMotorPositionUp:
-            robot.setArmMotorPosition(ARM_MOTOR_POSITION_UP);
-        case Command::OpenClaw:
-            robot.openClaw();
-        case Command::CloseClaw:
-            robot.closeClaw();
+namespace SerialDecoder {
+    void handleSerialData(byte b) {
+        switch (static_cast<Command>(b)) {
+            case Command::SetArmMotorPositionDown:
+                robot.setArmMotorPosition(ARM_MOTOR_POSITION_DOWN);
+                break;
+            case Command::SetArmMotorPositionUp:
+                robot.setArmMotorPosition(ARM_MOTOR_POSITION_UP);
+                break;
+            case Command::OpenClaw:
+                robot.openClaw();
+                break;
+            case Command::CloseClaw:
+                robot.closeClaw();
+                break;
+            default:
+                Serial.write("Unknown data detected\n");
+        }
     }
 }
