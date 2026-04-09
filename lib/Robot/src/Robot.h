@@ -20,7 +20,7 @@
 #define CLAW_SERVO_OPEN_ANGLE 180
 #define CLAW_SERVO_CLOSE_ANGLE 0
 
-#define ARM_MOTOR_POSITION_MAX 1300
+#define ARM_MOTOR_POSITION_MAX 650
 #define ARM_MOTOR_POSITION_MIN 0
 #define ARM_MOTOR_POSITION_UP 1200
 #define ARM_MOTOR_POSITION_DOWN 100
@@ -36,10 +36,9 @@ class Robot {
     void stepArmMotorDown();
     
     public:
+    Robot();
     void resetArmMotorPosition();
     void setArmMotorPosition(int position);
-    void moveArmMotorUp();
-    void moveArmMotorDown();
     void openClaw();
     void closeClaw();
 
