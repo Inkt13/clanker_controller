@@ -3,9 +3,8 @@
 #include <SerialDecoder.h>
 
 void setup() {
-  // Not sure if i have to do this but im not taking any chances lol
-  robot = Robot();
   Serial.begin(9600);
+  robot.setArmMotorPosition(ARM_MOTOR_POSITION_MAX);
 }
 
 // byte data sent from the Raspberry PI 5
