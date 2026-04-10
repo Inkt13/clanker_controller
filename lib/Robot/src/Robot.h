@@ -7,7 +7,7 @@
 
 // Pin number configuration. This is set according to the wiring as of 04/09/2026
 // That being said yeah there's nothing wired for the claw, so I set it to 2 for now
-#define CLAW_SERVO_PIN 2
+#define CLAW_SERVO_PIN 3
 
 // Wiring notes:
 // These IN1, IN2, IN3 and IN4 are labeled on the L289N motor driver
@@ -39,6 +39,8 @@ class Robot {
     Robot();
     void resetArmMotorPosition();
     void setArmMotorPosition(int position);
+
+    void initClaw();
     void openClaw();
     void closeClaw();
 

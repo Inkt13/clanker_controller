@@ -3,10 +3,13 @@
 
 Robot robot;
 
-Robot::Robot()
-{
+Robot::Robot() {
+    armMotorCurrentPosition = 0;
+    armMotorTargetPosition = 0;
+}
+
+void Robot::initClaw() {
     clawServo.attach(CLAW_SERVO_PIN);
-    setClawServoAngle(0);
 }
 
 void Robot::setClawServoAngle(int angle)
