@@ -1,7 +1,7 @@
 import serial
 import time
 
-ser = serial_test.Serial('COM7', 115200, timeout=0.1)
+ser = serial.Serial('COM7', 115200, timeout=0.1)
 time.sleep(2)  # Arduino reset moment
 
 while True:
