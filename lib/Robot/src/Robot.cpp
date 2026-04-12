@@ -1,12 +1,15 @@
 #include <Arduino.h>
 #include "Robot.h"
 
-Robot::Robot()
-{
-    clawServo.attach(CLAW_SERVO_PIN);
-    setClawServoAngle(0);
+Robot robot;
 
-    resetArmMotorPosition();
+Robot::Robot() {
+    armMotorCurrentPosition = 0;
+    armMotorTargetPosition = 0;
+}
+
+void Robot::initClaw() {
+    clawServo.attach(CLAW_SERVO_PIN);
 }
 
 void Robot::setClawServoAngle(int angle)
@@ -17,6 +20,10 @@ void Robot::setClawServoAngle(int angle)
 
 void Robot::stepArmMotorUp()
 {
+    armMotorCurrentPosition++;
+    if (armMotorCurrentPosition > ARM_MOTOR_POSITION_MAX)
+        armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
+
     const int armMotorPins[] = {ARM_MOTOR_IN4_PIN,ARM_MOTOR_IN3_PIN,ARM_MOTOR_IN2_PIN,ARM_MOTOR_IN1_PIN};
     const int numPins = 4;
     for(int i = 0;i < numPins;i++)
@@ -30,6 +37,9 @@ void Robot::stepArmMotorUp()
 
 void Robot::stepArmMotorDown()
 {
+    armMotorCurrentPosition--;
+    if (armMotorCurrentPosition < ARM_MOTOR_POSITION_MIN)
+        armMotorCurrentPosition = ARM_MOTOR_POSITION_MIN;
     const int armMotorPins[] = {ARM_MOTOR_IN1_PIN,ARM_MOTOR_IN2_PIN,ARM_MOTOR_IN3_PIN,ARM_MOTOR_IN4_PIN};
     const int numPins = 4;
     for(int i = 0;i < numPins;i++)

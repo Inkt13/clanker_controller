@@ -1,3 +1,4 @@
+#pragma once
 #include <Servo.h>
 #include <Arduino.h>
 
@@ -6,7 +7,7 @@
 
 // Pin number configuration. This is set according to the wiring as of 04/09/2026
 // That being said yeah there's nothing wired for the claw, so I set it to 2 for now
-#define CLAW_SERVO_PIN 2
+#define CLAW_SERVO_PIN 3
 
 // Wiring notes:
 // These IN1, IN2, IN3 and IN4 are labeled on the L289N motor driver
@@ -19,7 +20,7 @@
 #define CLAW_SERVO_OPEN_ANGLE 180
 #define CLAW_SERVO_CLOSE_ANGLE 0
 
-#define ARM_MOTOR_POSITION_MAX 650
+#define ARM_MOTOR_POSITION_MAX 1300
 #define ARM_MOTOR_POSITION_MIN 0
 #define ARM_MOTOR_POSITION_UP 1200
 #define ARM_MOTOR_POSITION_DOWN 100
@@ -38,8 +39,12 @@ class Robot {
     Robot();
     void resetArmMotorPosition();
     void setArmMotorPosition(int position);
+
+    void initClaw();
     void openClaw();
     void closeClaw();
 
     void updateArmMotor();
 };
+
+extern Robot robot;
