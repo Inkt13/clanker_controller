@@ -8,20 +8,23 @@ namespace SerialDecoder {
                 Serial.println(b, HEX);
                 break;
             case Command::ResetArmMotorPosition:
+                Serial.println("Resetting Arm Position");
                 robot.resetArmMotorPosition();
                 break;
-            case Command::SetArmMotorPositionDown:
+                case Command::SetArmMotorPositionDown:
                 Serial.println("Going down");
                 robot.setArmMotorPosition(ARM_MOTOR_POSITION_DOWN);
                 break;
-            case Command::SetArmMotorPositionUp:
+                case Command::SetArmMotorPositionUp:
                 Serial.println("Going up");
                 robot.setArmMotorPosition(ARM_MOTOR_POSITION_UP);
                 break;
-            case Command::OpenClaw:
+                case Command::OpenClaw:
+                Serial.println("Opening Claw");
                 robot.openClaw();
                 break;
-            case Command::CloseClaw:
+                case Command::CloseClaw:
+                Serial.println("Closing Claw");
                 robot.closeClaw();
                 break;
         }
