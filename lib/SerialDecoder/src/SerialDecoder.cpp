@@ -4,7 +4,8 @@ namespace SerialDecoder {
     void handleSerialData(byte b) {
         switch (static_cast<Command>(b)) {
             default:
-                Serial.println("Unknown byte");
+                Serial.print("Unknown byte: ");
+                Serial.println(b, HEX);
                 break;
             case Command::ResetArmMotorPosition:
                 robot.resetArmMotorPosition();
