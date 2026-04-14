@@ -26,7 +26,8 @@
 #define ARM_MOTOR_POSITION_DOWN 100
 #define ARM_MOTOR_STEP_DELAY_US 1000
 
-class Robot {
+class Robot
+{
     Servo clawServo;
     int armMotorCurrentPosition;
     int armMotorTargetPosition;
@@ -34,11 +35,13 @@ class Robot {
     void setClawServoAngle(int angle);
     void stepArmMotorUp();
     void stepArmMotorDown();
-    
-    public:
+
+public:
     Robot();
     void resetArmMotorPosition();
     void setArmMotorPosition(int position);
+
+    void SetArmMotorPositionValue(int position);
 
     void initClaw();
     void openClaw();
