@@ -78,12 +78,12 @@ void Robot::setArmMotorPosition(int position)
 
 void Robot::openClaw()
 {
-    setClawServoAngle(180);
+    setClawServoAngle(CLAW_SERVO_OPEN_ANGLE);
 }
 
 void Robot::closeClaw()
 {
-    setClawServoAngle(0);
+    setClawServoAngle(CLAW_SERVO_CLOSE_ANGLE);
 }
 
 void Robot::updateArmMotor()

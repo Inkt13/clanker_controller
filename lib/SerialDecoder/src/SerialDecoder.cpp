@@ -2,7 +2,6 @@
 
 namespace SerialDecoder
 {
-    static Command currentCommand;
     static int bytesNeeded = 0;
     static int value = 0;
     void handleSerialData(byte b)

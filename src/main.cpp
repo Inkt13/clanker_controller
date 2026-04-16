@@ -6,6 +6,7 @@ void setup()
 {
   Serial.begin(115200);
   robot.initClaw();
+
 }
 
 // byte data sent from the Raspberry PI 5
