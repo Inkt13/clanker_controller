@@ -11,20 +11,20 @@
 
 // Wiring notes:
 // These IN1, IN2, IN3 and IN4 are labeled on the L289N motor driver
-// OUT1, 2, 3, 4 on the L289N are connected to the Green, Red, Black and Blue wire on the FSK30J motor
+// OUT1, 2, 3, 4 on the L289N are  connected to the Green, Red, Black and Blue wire on the FSK30J motor
 #define ARM_MOTOR_IN1_PIN 7
 #define ARM_MOTOR_IN2_PIN 6
 #define ARM_MOTOR_IN3_PIN 5
 #define ARM_MOTOR_IN4_PIN 4
 
-#define CLAW_SERVO_OPEN_ANGLE 120
+#define CLAW_SERVO_OPEN_ANGLE 20
 #define CLAW_SERVO_CLOSE_ANGLE 175
 
-#define ARM_MOTOR_POSITION_MAX 1300
+#define ARM_MOTOR_POSITION_MAX 2400
 #define ARM_MOTOR_POSITION_MIN 0
 #define ARM_MOTOR_POSITION_UP 1200
 #define ARM_MOTOR_POSITION_DOWN 100
-#define ARM_MOTOR_STEP_DELAY_US 700
+#define ARM_MOTOR_STEP_DELAY_US 600
 
 class Robot
 {

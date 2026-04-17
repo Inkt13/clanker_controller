@@ -23,7 +23,7 @@ def CloseClaw():
 
 
 
-OpenClaw()
+ResetArmMotorPosition()
 
 
 

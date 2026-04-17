@@ -5,8 +5,8 @@ Robot robot;
 
 Robot::Robot()
 {
-    armMotorCurrentPosition = 0;
-    armMotorTargetPosition = 0;
+    armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
+    armMotorTargetPosition = ARM_MOTOR_POSITION_MAX;
 }
 
 void Robot::initClaw()
@@ -46,23 +46,23 @@ void Robot::stepArmMotorDown()
     const int numPins = 4;
     for (int i = 0; i < numPins; i++)
     {
-        if (i != 0)
-            digitalWrite(armMotorPins[i - 1], LOW);
         digitalWrite(armMotorPins[i], HIGH);
         delayMicroseconds(ARM_MOTOR_STEP_DELAY_US);
+        digitalWrite(armMotorPins[i], LOW);
     }
-    digitalWrite(armMotorPins[3], LOW);
 }
 
 void Robot::resetArmMotorPosition()
 {
-    armMotorCurrentPosition = 0;
-    armMotorTargetPosition = 0;
+    armMotorCurrentPosition = ARM_MOTOR_POSITION_MIN;
+    armMotorTargetPosition = ARM_MOTOR_POSITION_MAX;
 
     for (int i = 0; i < ARM_MOTOR_POSITION_MAX; i++)
     {
-        stepArmMotorDown();
+        stepArmMotorUp();
     }
+
+    armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
 }
 
 void Robot::setArmMotorPosition(int position)
@@ -96,4 +96,8 @@ void Robot::updateArmMotor()
     {
         stepArmMotorUp();
     }
+}
+
+void Robot::SetArmMotorPositionValue(int position) {
+    armMotorTargetPosition = position;
 }
