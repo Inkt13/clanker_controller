@@ -20,10 +20,10 @@ def OpenClaw():
 def CloseClaw():
     ser.write(bytes([0x22]))
 
+def SetClawAngle(angle):
+    ser.write(bytes([0x40, angle]))
 
-
-
-ResetArmMotorPosition()
+SetArmMotorPositionValue(0)
 
 
 

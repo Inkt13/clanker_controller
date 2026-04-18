@@ -16,6 +16,11 @@ void Robot::initClaw()
 
 void Robot::setClawServoAngle(int angle)
 {
+    if (angle > 180)
+        angle = 180;
+    if (angle < 0)
+        angle = 0;
+
     clawServo.write(angle);
 }
 
@@ -59,7 +64,7 @@ void Robot::resetArmMotorPosition()
 
     for (int i = 0; i < ARM_MOTOR_POSITION_MAX; i++)
     {
-        stepArmMotorUp();
+        stepArmMotorDown();
     }
 
     armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
@@ -98,6 +103,7 @@ void Robot::updateArmMotor()
     }
 }
 
-void Robot::SetArmMotorPositionValue(int position) {
+void Robot::SetArmMotorPositionValue(int position)
+{
     armMotorTargetPosition = position;
 }

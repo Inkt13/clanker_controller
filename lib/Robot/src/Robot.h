@@ -20,11 +20,11 @@
 #define CLAW_SERVO_OPEN_ANGLE 20
 #define CLAW_SERVO_CLOSE_ANGLE 175
 
-#define ARM_MOTOR_POSITION_MAX 2400
+#define ARM_MOTOR_POSITION_MAX 1200
 #define ARM_MOTOR_POSITION_MIN 0
 #define ARM_MOTOR_POSITION_UP 1200
 #define ARM_MOTOR_POSITION_DOWN 100
-#define ARM_MOTOR_STEP_DELAY_US 600
+#define ARM_MOTOR_STEP_DELAY_US 1500
 
 class Robot
 {
@@ -32,7 +32,6 @@ class Robot
     int armMotorCurrentPosition;
     int armMotorTargetPosition;
 
-    void setClawServoAngle(int angle);
     void stepArmMotorUp();
     void stepArmMotorDown();
 
@@ -40,6 +39,7 @@ public:
     Robot();
     void resetArmMotorPosition();
     void setArmMotorPosition(int position);
+    void setClawServoAngle(int angle);
 
     void SetArmMotorPositionValue(int position);
 

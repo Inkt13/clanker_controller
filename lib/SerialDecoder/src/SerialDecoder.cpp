@@ -1,12 +1,15 @@
 #include <SerialDecoder.h>
+#include <Robot.h>
 
 namespace SerialDecoder
 {
     static int bytesNeeded = 0;
     static int value = 0;
+    static Command currentCommand; // 🔥 NEW
+
     void handleSerialData(byte b)
     {
-
+        // 🔥 Receiving bytes
         if (bytesNeeded > 0)
         {
             value = (value << 8) | b;
@@ -14,45 +17,66 @@ namespace SerialDecoder
 
             if (bytesNeeded == 0)
             {
-                Serial.print("Target position: ");
+                Serial.print("Value received: ");
                 Serial.println(value);
 
-                robot.setArmMotorPosition(value);
+                // 🔥 Decide based on command
+                switch (currentCommand)
+                {
+                case Command::SetArmMotorPositionValue:
+                    robot.setArmMotorPosition(value);
+                    break;
+
+                case Command::SetClawAngleValue:
+                    robot.setClawServoAngle(value);
+                    break;
+
+                default:
+                    break;
+                }
             }
             return;
         }
+
+        // 🔥 New command comes here
         switch (static_cast<Command>(b))
         {
         default:
             Serial.print("Unknown byte: ");
             Serial.println(b, HEX);
             break;
+
         case Command::ResetArmMotorPosition:
-            Serial.println("Resetting Arm Position");
             robot.resetArmMotorPosition();
             break;
+
         case Command::SetArmMotorPositionDown:
-            Serial.println("Going down");
             robot.setArmMotorPosition(ARM_MOTOR_POSITION_DOWN);
             break;
+
         case Command::SetArmMotorPositionUp:
-            Serial.println("Going up");
             robot.setArmMotorPosition(ARM_MOTOR_POSITION_UP);
             break;
 
         case Command::SetArmMotorPositionValue:
-            Serial.println("Receiving position...");
+            Serial.println("Receiving arm position...");
+            currentCommand = Command::SetArmMotorPositionValue;
             value = 0;
-
             bytesNeeded = 2;
             break;
 
+        case Command::SetClawAngleValue:
+            Serial.println("Receiving claw angle...");
+            currentCommand = Command::SetClawAngleValue;
+            value = 0;
+            bytesNeeded = 1;
+            break;
+
         case Command::OpenClaw:
-            Serial.println("Opening Claw");
             robot.openClaw();
             break;
+
         case Command::CloseClaw:
-            Serial.println("Closing Claw");
             robot.closeClaw();
             break;
         }
