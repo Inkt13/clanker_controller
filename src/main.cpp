@@ -19,8 +19,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET,
 
 void setup()
 {
-  Serial.begin(9600);
-
+  Serial.begin(115200);
   // SSD1306_SWITCHCAPVCC = generate display voltage from 3.3V internally
   if (!display.begin(SSD1306_SWITCHCAPVCC))
   {
@@ -44,6 +43,14 @@ void setup()
   display.println(F("SUCCESS!"));
 
   display.display(); // Actually push the data to the screen
+
+  pinMode(ARM_MOTOR_IN1_PIN, OUTPUT);
+  pinMode(ARM_MOTOR_IN2_PIN, OUTPUT);
+  pinMode(ARM_MOTOR_IN3_PIN, OUTPUT);
+  pinMode(ARM_MOTOR_IN4_PIN, OUTPUT);
+  
+  robot.initClaw();
+
 }
 
 // byte data sent from the Raspberry PI 5

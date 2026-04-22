@@ -1,7 +1,7 @@
 import serial
 import time
 
-ser = serial.Serial('COM9', 115200, timeout=0.1)
+ser = serial.Serial('COM8', 115200, timeout=0.1)
 time.sleep(2)  # Arduino reset moment
 
 def ResetArmMotorPosition():
@@ -23,7 +23,11 @@ def CloseClaw():
 def SetClawAngle(angle):
     ser.write(bytes([0x40, angle]))
 
-SetArmMotorPositionValue(0)
+
+
+
+SetArmMotorPositionValue(100)
+
 
 
 
