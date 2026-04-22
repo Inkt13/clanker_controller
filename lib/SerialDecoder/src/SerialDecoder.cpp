@@ -1,11 +1,13 @@
 #include <SerialDecoder.h>
-#include <Robot.h>
 
 namespace SerialDecoder
 {
     static int bytesNeeded = 0;
     static int value = 0;
     static Command currentCommand; // 🔥 NEW
+
+    static char displayText[32] = {0}; // Buffer for task code text
+    static int displayTextLength = 0;
 
     void handleSerialData(byte b)
     {
@@ -14,6 +16,24 @@ namespace SerialDecoder
         {
             value = (value << 8) | b;
             bytesNeeded--;
+
+            // Handle multi-byte text reception
+            if (currentCommand == Command::SetDisplayText)
+            {
+                if (b == 0 || displayTextLength >= 31) // Null terminator or max length
+                {
+                    displayText[displayTextLength] = '\0';
+                    bytesNeeded = 0;
+                    Serial.print("Display text received: ");
+                    Serial.println(displayText);
+                    robot.displayTaskCode(getDisplayText());
+                }
+                else
+                {
+                    displayText[displayTextLength++] = b;
+                }
+                return;
+            }
 
             if (bytesNeeded == 0)
             {
@@ -79,6 +99,18 @@ namespace SerialDecoder
         case Command::CloseClaw:
             robot.closeClaw();
             break;
+
+        case Command::SetDisplayText:
+            Serial.println("Receiving display text...");
+            currentCommand = Command::SetDisplayText;
+            displayTextLength = 0;
+            bytesNeeded = 255; // Max length, will be terminated by null byte or limit
+            break;
         }
+    }
+
+    const char *getDisplayText()
+    {
+        return displayText;
     }
 }

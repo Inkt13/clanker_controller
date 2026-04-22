@@ -15,8 +15,11 @@ namespace SerialDecoder
         OpenClaw = 0x21,
         CloseClaw = 0x22,
 
-        SetClawAngleValue = 0x40
+        SetClawAngleValue = 0x40,
+        
+        SetDisplayText = 0x50
     };
 
     void handleSerialData(byte b);
+    const char* getDisplayText();
 }

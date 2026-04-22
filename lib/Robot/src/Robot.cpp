@@ -3,7 +3,7 @@
 
 Robot robot;
 
-Robot::Robot()
+Robot::Robot() : display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET, OLED_CS)
 {
     armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
     armMotorTargetPosition = ARM_MOTOR_POSITION_MAX;
@@ -106,4 +106,45 @@ void Robot::updateArmMotor()
 void Robot::SetArmMotorPositionValue(int position)
 {
     armMotorTargetPosition = position;
+}
+
+void Robot::initDisplay()
+{
+    if (!display.begin(SSD1306_SWITCHCAPVCC))
+    {
+        Serial.println(F("SSD1306 allocation failed"));
+        for (;;)
+            ; // Don't proceed, loop forever
+    }
+}
+
+void Robot::displayStartupScreen()
+{
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0, 0);
+    display.println(F("Arduino Nano"));
+    display.println(F("Ready..."));
+
+    display.setTextSize(5);
+    display.setCursor(0, 25);
+    display.println(F("123+123"));
+
+    display.display();
+}
+
+void Robot::displayTaskCode(const char* text)
+{
+    display.clearDisplay();
+    display.setTextSize(1);
+    display.setTextColor(SSD1306_WHITE);
+    display.setCursor(0, 0);
+    display.println(F("Task Code:"));
+
+    display.setTextSize(3);
+    display.setCursor(0, 20);
+    display.println(text);
+
+    display.display();
 }

@@ -23,10 +23,17 @@ def CloseClaw():
 def SetClawAngle(angle):
     ser.write(bytes([0x40, angle]))
 
+def SetDisplayText(text):
+    """Send task code text to display (e.g., '123+321' or '213+132')"""
+    ser.write(bytes([0x50]))  # Command byte for SetDisplayText
+    # Send each character followed by null terminator
+    for char in text:
+        ser.write(bytes([ord(char)]))
+    ser.write(bytes([0]))  # Null terminator
 
 
-
-SetArmMotorPositionValue(100)
+# Example: Send a scrambled task code to the display
+SetDisplayText("213+132")
 
 
 
