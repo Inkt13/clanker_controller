@@ -45,9 +45,13 @@ class Robot
     int armMotorCurrentPosition;
     int armMotorTargetPosition;
     Adafruit_SSD1306 display;
+    
+    int scrollPosition;
+    unsigned long lastScrollTime;
 
     void stepArmMotorUp();
     void stepArmMotorDown();
+    void updateScroll();
 
 public:
     Robot();
@@ -66,6 +70,7 @@ public:
     void initDisplay();
     void displayTaskCode(const char* text);
     void displayStartupScreen();
+    void displayScrollingText(const char* text, int x, int y, int textSize);
 };
 
 extern Robot robot;

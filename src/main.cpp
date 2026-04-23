@@ -28,4 +28,6 @@ void loop()
     SerialDecoder::handleSerialData(serialData);
   }
   robot.updateArmMotor();
+  robot.updateScroll();
+  robot.displayStartupScreen();
 }

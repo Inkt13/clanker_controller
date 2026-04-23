@@ -7,6 +7,8 @@ Robot::Robot() : display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET,
 {
     armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
     armMotorTargetPosition = ARM_MOTOR_POSITION_MAX;
+    scrollPosition = 0;
+    lastScrollTime = 0;
 }
 
 void Robot::initClaw()
@@ -129,9 +131,50 @@ void Robot::displayStartupScreen()
 
     display.setTextSize(5);
     display.setCursor(0, 25);
-    display.println(F("123+123"));
+    displayScrollingText("123+123", 0, 25, 5);
 
     display.display();
+}
+
+void Robot::updateScroll()
+{
+    unsigned long currentTime = millis();
+    // Scroll every 500ms
+    if (currentTime - lastScrollTime >= 500)
+    {
+        scrollPosition++;
+        lastScrollTime = currentTime;
+    }
+}
+
+void Robot::displayScrollingText(const char* text, int x, int y, int textSize)
+{
+    int textLength = strlen(text);
+    if (textLength == 0) return;
+    
+    // 4 characters can fit at text size 5
+    int maxCharsDisplayed = 4;
+    
+    // Reset scroll position if it exceeds text length
+    if (scrollPosition >= textLength)
+    {
+        scrollPosition = 0;
+    }
+    
+    // Display up to maxCharsDisplayed characters starting from scrollPosition
+    char displayBuffer[maxCharsDisplayed + 1];
+    int charsToDisplay = 0;
+    
+    for (int i = 0; i < maxCharsDisplayed && (scrollPosition + i) < textLength; i++)
+    {
+        displayBuffer[i] = text[scrollPosition + i];
+        charsToDisplay++;
+    }
+    displayBuffer[charsToDisplay] = '\0';
+    
+    display.setCursor(x, y);
+    display.setTextSize(textSize);
+    display.print(displayBuffer);
 }
 
 void Robot::displayTaskCode(const char* text)
