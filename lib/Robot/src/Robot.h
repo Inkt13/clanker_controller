@@ -51,10 +51,10 @@ class Robot
 
     void stepArmMotorUp();
     void stepArmMotorDown();
-    void updateScroll();
 
 public:
     Robot();
+    void updateScroll();
     void resetArmMotorPosition();
     void setArmMotorPosition(int position);
     void setClawServoAngle(int angle);
