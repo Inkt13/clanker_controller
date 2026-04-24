@@ -9,6 +9,18 @@ Robot::Robot() : display(SCREEN_WIDTH, SCREEN_HEIGHT, &SPI, OLED_DC, OLED_RESET,
     armMotorTargetPosition = ARM_MOTOR_POSITION_MAX;
     scrollPosition = 0;
     lastScrollTime = 0;
+    currentTaskCode[0] = '\0';
+    isDisplayingTaskCode = false;
+}
+
+bool Robot::armMotorUpSensorDetected()
+{
+    return digitalRead(ARM_MOTOR_UP_SENSOR_PIN);
+}
+
+bool Robot::armMotorDownSensorDetected()
+{
+    return digitalRead(ARM_MOTOR_DOWN_SENSOR_PIN);
 }
 
 void Robot::initClaw()
@@ -28,6 +40,11 @@ void Robot::setClawServoAngle(int angle)
 
 void Robot::stepArmMotorUp()
 {
+    if (armMotorUpSensorDetected())
+    {
+        armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
+        return;
+    }
     armMotorCurrentPosition++;
     if (armMotorCurrentPosition > ARM_MOTOR_POSITION_MAX)
         armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
@@ -46,6 +63,11 @@ void Robot::stepArmMotorUp()
 
 void Robot::stepArmMotorDown()
 {
+    if (armMotorDownSensorDetected())
+    {
+        armMotorCurrentPosition = ARM_MOTOR_POSITION_MIN;
+        return;
+    }
     armMotorCurrentPosition--;
     if (armMotorCurrentPosition < ARM_MOTOR_POSITION_MIN)
         armMotorCurrentPosition = ARM_MOTOR_POSITION_MIN;
@@ -66,7 +88,9 @@ void Robot::resetArmMotorPosition()
 
     for (int i = 0; i < ARM_MOTOR_POSITION_MAX; i++)
     {
-        stepArmMotorDown();
+        stepArmMotorUp();
+        if (armMotorUpSensorDetected())
+            break;
     }
 
     armMotorCurrentPosition = ARM_MOTOR_POSITION_MAX;
@@ -112,11 +136,11 @@ void Robot::SetArmMotorPositionValue(int position)
 
 void Robot::initDisplay()
 {
-    if (!display.begin(SSD1306_SWITCHCAPVCC))
+    if (!display.begin(SSD1306_EXTERNALVCC))
     {
-        Serial.println(F("SSD1306 allocation failed"));
-        for (;;)
-            ; // Don't proceed, loop forever
+        while(1)
+        Serial.println("SSD1306 allocation failed");
+             // Don't proceed, loop forever
     }
 }
 
@@ -129,9 +153,9 @@ void Robot::displayStartupScreen()
     display.println(F("Arduino Nano"));
     display.println(F("Ready..."));
 
-    display.setTextSize(5);
+    display.setTextSize(3);
     display.setCursor(0, 25);
-    displayScrollingText("123+123", 0, 25, 5);
+    display.print(F("Waiting"));
 
     display.display();
 }
@@ -144,50 +168,67 @@ void Robot::updateScroll()
     {
         scrollPosition++;
         lastScrollTime = currentTime;
+
+        // Redraw display if displaying task code
+        if (isDisplayingTaskCode)
+        {
+            display.clearDisplay();
+            display.setTextSize(1);
+            display.setTextColor(SSD1306_WHITE);
+            display.setCursor(0, 0);
+            display.println(F("Task Code:"));
+            displayScrollingText(currentTaskCode, 0, 25, 5);
+            display.display();
+        }
     }
 }
 
-void Robot::displayScrollingText(const char* text, int x, int y, int textSize)
+void Robot::displayScrollingText(const char *text, int x, int y, int textSize)
 {
     int textLength = strlen(text);
-    if (textLength == 0) return;
-    
+    if (textLength == 0)
+        return;
+
     // 4 characters can fit at text size 5
     int maxCharsDisplayed = 4;
-    
+
     // Reset scroll position if it exceeds text length
     if (scrollPosition >= textLength)
     {
         scrollPosition = 0;
     }
-    
+
     // Display up to maxCharsDisplayed characters starting from scrollPosition
     char displayBuffer[maxCharsDisplayed + 1];
     int charsToDisplay = 0;
-    
+
     for (int i = 0; i < maxCharsDisplayed && (scrollPosition + i) < textLength; i++)
     {
         displayBuffer[i] = text[scrollPosition + i];
         charsToDisplay++;
     }
     displayBuffer[charsToDisplay] = '\0';
-    
+
     display.setCursor(x, y);
     display.setTextSize(textSize);
     display.print(displayBuffer);
 }
 
-void Robot::displayTaskCode(const char* text)
+void Robot::displayTaskCode(const char *text)
 {
+    // Store the task code for continuous scrolling
+    strncpy(currentTaskCode, text, sizeof(currentTaskCode) - 1);
+    currentTaskCode[sizeof(currentTaskCode) - 1] = '\0';
+    isDisplayingTaskCode = true;
+    scrollPosition = 0;
+    lastScrollTime = millis();
+
+    // Display initial frame
     display.clearDisplay();
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
     display.setCursor(0, 0);
     display.println(F("Task Code:"));
-
-    display.setTextSize(3);
-    display.setCursor(0, 20);
-    display.println(text);
-
+    displayScrollingText(currentTaskCode, 0, 25, 5);
     display.display();
 }

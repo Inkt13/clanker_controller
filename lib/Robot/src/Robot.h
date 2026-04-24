@@ -53,10 +53,13 @@ class Robot
     
     int scrollPosition;
     unsigned long lastScrollTime;
+    char currentTaskCode[256];
+    bool isDisplayingTaskCode;
 
     void stepArmMotorUp();
     void stepArmMotorDown();
-
+    bool armMotorUpSensorDetected();
+    bool armMotorDownSensorDetected();
 public:
     Robot();
     void updateScroll();

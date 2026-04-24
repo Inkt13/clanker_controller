@@ -23,7 +23,7 @@ void setup()
   robot.setClawServoAngle(20);
   // delay(2000);
   // robot.displayTaskCode("123+123");
-
+  robot.setArmMotorPosition(1000);
   
 }
 
