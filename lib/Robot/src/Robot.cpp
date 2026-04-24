@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include "Robot.h"
 
 Robot robot;
@@ -136,11 +135,13 @@ void Robot::SetArmMotorPositionValue(int position)
 
 void Robot::initDisplay()
 {
+    SPI.begin(OLED_CLK, -1, OLED_MOSI, OLED_CS);
+
     if (!display.begin(SSD1306_EXTERNALVCC))
     {
-        while(1)
-        Serial.println("SSD1306 allocation failed");
-             // Don't proceed, loop forever
+        while (1)
+            Serial.println("SSD1306 allocation failed");
+        // Don't proceed, loop forever
     }
 }
 
@@ -150,7 +151,7 @@ void Robot::displayStartupScreen()
     display.setTextSize(1);
     display.setTextColor(SSD1306_WHITE);
     display.setCursor(0, 0);
-    display.println(F("Arduino Nano"));
+    display.println(F("ESP32 Dev"));
     display.println(F("Ready..."));
 
     display.setTextSize(3);

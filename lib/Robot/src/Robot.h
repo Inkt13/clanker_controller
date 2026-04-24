@@ -1,36 +1,36 @@
 #pragma once
-#include <Servo.h>
+#include <ESP32Servo.h>
 #include <Arduino.h>
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 
-// The Arduino Nano microcontroller is responsible for controlling two components in the robot:
+// The ESP32 microcontroller is responsible for controlling two components in the robot:
 // The robotic arm motor that moves along the y axis (via FSK30J + L298N driver) and the claw (via MG90S micro servo)
 
-// Pin number configuration. This is set according to the wiring as of 04/09/2026
-// That being said yeah there's nothing wired for the claw, so I set it to 2 for now
-#define CLAW_SERVO_PIN 3
+// Pin number configuration for an ESP32 dev module.
+// Adjust these pin numbers if your wiring differs.
+#define CLAW_SERVO_PIN 25
 
 // Wiring notes:
-// These IN1, IN2, IN3 and IN4 are labeled on the L289N motor driver
-// OUT1, 2, 3, 4 on the L289N are  connected to the Green, Red, Black and Blue wire on the FSK30J motor
-#define ARM_MOTOR_IN1_PIN 7
-#define ARM_MOTOR_IN2_PIN 6
-#define ARM_MOTOR_IN3_PIN 5
-#define ARM_MOTOR_IN4_PIN 4
+// These IN1, IN2, IN3 and IN4 are labeled on the L298N motor driver
+// OUT1, 2, 3, 4 on the L298N are connected to the Green, Red, Black and Blue wire on the FSK30J motor
+#define ARM_MOTOR_IN1_PIN 26
+#define ARM_MOTOR_IN2_PIN 27
+#define ARM_MOTOR_IN3_PIN 14
+#define ARM_MOTOR_IN4_PIN 12
 
 // Arm motor sensors
-#define ARM_MOTOR_UP_SENSOR_PIN 9
-#define ARM_MOTOR_DOWN_SENSOR_PIN 12
+#define ARM_MOTOR_UP_SENSOR_PIN 35
+#define ARM_MOTOR_DOWN_SENSOR_PIN 34
 
 // OLED Display pins
-#define OLED_MOSI 11
-#define OLED_CLK 13
-#define OLED_DC 2
-#define OLED_CS 10
-#define OLED_RESET 8
+#define OLED_MOSI 23
+#define OLED_CLK 18
+#define OLED_DC 17
+#define OLED_CS 5
+#define OLED_RESET 16
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
