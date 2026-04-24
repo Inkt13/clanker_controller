@@ -13,15 +13,6 @@
 // That being said yeah there's nothing wired for the claw, so I set it to 2 for now
 #define CLAW_SERVO_PIN 3
 
-// OLED Display pins
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define OLED_MOSI 11
-#define OLED_CLK 13
-#define OLED_DC 2
-#define OLED_CS 10
-#define OLED_RESET 8
-
 // Wiring notes:
 // These IN1, IN2, IN3 and IN4 are labeled on the L289N motor driver
 // OUT1, 2, 3, 4 on the L289N are  connected to the Green, Red, Black and Blue wire on the FSK30J motor
@@ -29,6 +20,20 @@
 #define ARM_MOTOR_IN2_PIN 6
 #define ARM_MOTOR_IN3_PIN 5
 #define ARM_MOTOR_IN4_PIN 4
+
+// Arm motor sensors
+#define ARM_MOTOR_UP_SENSOR_PIN 9
+#define ARM_MOTOR_DOWN_SENSOR_PIN 12
+
+// OLED Display pins
+#define OLED_MOSI 11
+#define OLED_CLK 13
+#define OLED_DC 2
+#define OLED_CS 10
+#define OLED_RESET 8
+
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
 
 #define CLAW_SERVO_OPEN_ANGLE 20
 #define CLAW_SERVO_CLOSE_ANGLE 175
